@@ -21,7 +21,7 @@ const displayBookDetails = (loading, data, error) => {
   } else {
     return (
       <div>
-        <p>No data to display...</p>
+        <p>Please select a book</p>
       </div>
     );
   }
