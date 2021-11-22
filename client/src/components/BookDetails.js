@@ -1,11 +1,11 @@
 import React from 'react';
-import { useQuery } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 
 import { getBookQuery } from '../queries/queries';
 
 const displayBookDetails = (loading, data, error) => {
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Something went wrong</p>;
+  if (error) return `Error! ${error.message}`;
   if (data.book) {
     return (
       <div>

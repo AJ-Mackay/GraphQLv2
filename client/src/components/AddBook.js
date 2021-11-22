@@ -1,32 +1,29 @@
 import React, { useState } from 'react';
-import { graphql } from 'react-apollo';
-import { compose } from 'recompose';
+import { useQuery } from '@apollo/client';
 
-import {
-  getAuthorsQuery,
-  addBookMutation,
-  getBooksQuery,
-} from '../queries/queries';
+import { getBooksQuery } from '../queries/queries';
 
-const displayAuthors = (props) => {
-  let data = props.getAuthorsQuery;
-  if (data.loading) {
-    return <option disabled>Loading Authors...</option>;
-  } else {
-    return data.authors.map((author) => {
-      return (
-        <option key={author.id} value={author.id}>
-          {author.name}
-        </option>
-      );
-    });
-  }
-};
-
-function AddBook(props) {
+const AddBook = (props) => {
+  const { loading, error, data } = useQuery(props.getAuthorsQuery);
   const [name, setName] = useState('');
   const [genre, setGenre] = useState('');
   const [authorId, setAuthorId] = useState('');
+
+  const displayAuthors = (props) => {
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error.message}`;
+    if (data.loading) {
+      return <option disabled>Loading Authors...</option>;
+    } else {
+      return data.authors.map((author) => {
+        return (
+          <option key={author.id} value={author.id}>
+            {author.name}
+          </option>
+        );
+      });
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -74,9 +71,6 @@ function AddBook(props) {
       <button>+</button>
     </form>
   );
-}
+};
 
-export default compose(
-  graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
-  graphql(addBookMutation, { name: 'addBookMutation' })
-)(AddBook);
+export default AddBook;
