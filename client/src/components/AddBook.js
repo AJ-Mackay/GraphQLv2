@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { graphql } from 'react-apollo';
+import { compose } from 'recompose';
 import { useQuery } from '@apollo/client';
 
-import { getBooksQuery } from '../queries/queries';
+import {
+  getAuthorsQuery,
+  addBookMutation,
+  getBooksQuery,
+} from '../queries/queries';
 
 const AddBook = (props) => {
   const { loading, error, data } = useQuery(props.getAuthorsQuery);
@@ -73,4 +79,7 @@ const AddBook = (props) => {
   );
 };
 
-export default AddBook;
+export default compose(
+  graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
+  graphql(addBookMutation, { name: 'addBookMutation' })
+)(AddBook);
