@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import { graphql } from 'react-apollo';
-import { compose } from 'recompose';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
-import {
-  getAuthorsQuery,
-  addBookMutation,
-  getBooksQuery,
-} from '../queries/queries';
+import { getBooksQuery } from '../queries/queries';
 
 const AddBook = (props) => {
   const { loading, error, data } = useQuery(props.getAuthorsQuery);
+  const [addNewBook] = useMutation(props.addBookMutation);
   const [name, setName] = useState('');
   const [genre, setGenre] = useState('');
   const [authorId, setAuthorId] = useState('');
@@ -33,7 +28,7 @@ const AddBook = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addBookMutation({
+    addNewBook({
       variables: {
         name: name,
         genre: genre,
@@ -79,7 +74,4 @@ const AddBook = (props) => {
   );
 };
 
-export default compose(
-  graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
-  graphql(addBookMutation, { name: 'addBookMutation' })
-)(AddBook);
+export default AddBook;

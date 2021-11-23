@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import './index.css';
 import BookList from './components/BookList';
-// import AddBook from './components/AddBook';
+import AddBook from './components/AddBook';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <h1>Ash's Reading List</h1>
       <BookList />
-      {/* <AddBook /> */}
+      <AddBook />
     </div>
   );
 }
