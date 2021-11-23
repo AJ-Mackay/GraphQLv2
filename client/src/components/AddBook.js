@@ -5,7 +5,7 @@ import { getBooksQuery } from '../queries/queries';
 
 const AddBook = (props) => {
   const { loading, error, data } = useQuery(props.getAuthorsQuery);
-  const [addNewBook] = useMutation(props.addBookMutation);
+  const [addNewBook, { _loading, _error }] = useMutation(props.addBookMutation);
   const [name, setName] = useState('');
   const [genre, setGenre] = useState('');
   const [authorId, setAuthorId] = useState('');
@@ -28,6 +28,8 @@ const AddBook = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (_loading) return 'Loading...';
+    if (_error) return `Error! ${error.message}`;
     addNewBook({
       variables: {
         name: name,
