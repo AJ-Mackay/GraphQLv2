@@ -81,10 +81,9 @@ const AddBook = (props) => {
   );
 };
 
-export default compose(
-  graphql(
-    getAuthorsQuery,
-    { name: 'getAuthorsQuery' },
-    graphql(addBookMutation, { name: 'addBookMutation' })
-  )
-)(AddBook);
+// export default compose(
+//   graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
+//   graphql(addBookMutation, { name: 'addBookMutation' })
+// )(AddBook);
+
+export default AddBook;
