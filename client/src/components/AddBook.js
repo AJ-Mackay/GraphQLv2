@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-
-import { getBooksQuery } from '../queries/queries';
+import { graphql } from 'graphql';
+import { compose } from 'recompose';
+import {
+  getAuthorsQuery,
+  addBookMutation,
+  getBooksQuery,
+} from '../queries/queries';
 
 const AddBook = (props) => {
-  const { loading, error, data } = useQuery(props.getAuthorsQuery);
-  const [addNewBook, { _loading, _error }] = useMutation(props.addBookMutation);
+  const { loading, error, data } = useQuery(getAuthorsQuery);
+  const [addNewBook, { _loading, _error }] = useMutation(addBookMutation);
   const [name, setName] = useState('');
   const [genre, setGenre] = useState('');
   const [authorId, setAuthorId] = useState('');
@@ -76,4 +81,10 @@ const AddBook = (props) => {
   );
 };
 
-export default AddBook;
+export default compose(
+  graphql(
+    getAuthorsQuery,
+    { name: 'getAuthorsQuery' },
+    graphql(addBookMutation, { name: 'addBookMutation' })
+  )
+)(AddBook);
