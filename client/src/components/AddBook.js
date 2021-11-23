@@ -41,7 +41,7 @@ const AddBook = (props) => {
         genre: genre,
         authorId: authorId,
       },
-      refetchQueries: [{ query: getBooksQuery }],
+      refetchQueries: [getBooksQuery],
     });
   };
 
