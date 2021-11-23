@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { graphql } from 'graphql';
-import { compose } from 'recompose';
 import {
   getAuthorsQuery,
   addBookMutation,
@@ -80,10 +78,5 @@ const AddBook = (props) => {
     </form>
   );
 };
-
-// export default compose(
-//   graphql(getAuthorsQuery, { name: 'getAuthorsQuery' }),
-//   graphql(addBookMutation, { name: 'addBookMutation' })
-// )(AddBook);
 
 export default AddBook;
